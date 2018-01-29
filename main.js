@@ -1,4 +1,6 @@
 "use strict";
+// Author: Robert Vandenberg Huang
+// rvh.omni@gmail.com
 var InterfaceInfo = /** @class */ (function () {
     function InterfaceInfo(typeName, ns, referenceUrl) {
         this._typeName = typeName;
