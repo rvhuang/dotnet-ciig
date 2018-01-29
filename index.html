@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:image" content="" />
+    -->
+    <meta property="og:title" content="NET Collection Interface Interactive Guide" />
+    <meta property="og:description" content="An interactive guide to help people understand and choose their collection interfaces in .NET world." />
+    <title>.Net Collection Interfaces Interactive Guide</title>    
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZklEQVR42mNkoBAwDgoDWIC4AYhjgZiPSH2fgHgxSB/IgG4gLsGj+BUQpwPxfyQxOSCuB+L5IAM+ADE/ARt1gfgKmlgCEE9gRDMZF3AA4oNoYvZAfGCYGEBxIFIcjRQnJIrAwBsAAGOrIQvOAF2fAAAAAElFTkSuQmCC" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/marked@0.3.9"></script>
+    <style>
+        .navbar-default {
+            background: transparent;
+            background-image: none;
+            border-color: transparent;
+            box-shadow: none;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s
+        } 
+        .fade-enter, .fade-leave-to {
+            opacity: 0
+        }
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+        .flip-list-move {
+            transition: transform 0.5s;   
+        }
+    </style>
+</head>
+<body>     
+    <div class="container">           
+        <!-- Modal -->
+        <div class="modal fade" id="dialogBoxPm" role="dialog" tabindex="-1" aria-labelledby="lablePm">
+            <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="lablePm"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;&nbsp;Why are you here?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>I don't think you need the guide.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <div class="modal fade" id="dialogBoxFaq" role="dialog" tabindex="-1" aria-labelledby="lableFaq">
+            <div class="modal-dialog modal-lg" role="document">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="lableFaq"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;FAQ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" id="dialogBoxFaqBody"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="modal fade" id="dialogBoxAbout" role="dialog" tabindex="-1" aria-labelledby="lableAbout">
+            <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="lableAbout"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;About</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" id="dialogBoxAboutBody"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <!--Navbar-->
+        <nav>
+            <ul class="nav nav-pills navbar-right">
+                <li><a href="/index.html" class="btn-default">Home</a></li>
+                <li><a href="#dialogBoxFaq" class="btn-default" data-toggle="modal" data-target="#dialogBoxFaq">FAQ</a></li>
+                <li><a href="#dialogBoxAbout" class="btn-default" data-toggle="modal" data-target="#dialogBoxAbout">About</a></li>
+            </ul>
+        </nav>
+        <div class="page-header">
+            <h2>.NET Collection Interface Interactive Guide</h2>
+            <p>An interactive guide to help people understand the collection interfaces in .NET world.</p>
+        </div>
+        <div id="main">
+            <transition name="fade" mode="out-in" v-on:after-enter="enablePopover">
+                <div class="row" v-if="currentStep == 0" key="step0">
+                    <div class="col-md-12 text-center">
+                        <p class="lead">&nbsp;</p>
+                        <p class="lead">There are many collection interfaces in .NET world.<br />Let's see which is best for you.</p>
+                        <p class="lead">
+                            <button type="button" class="btn btn-default btn-lg" v-on:click="currentStep = 1"><b>Get Started</b></button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row" v-if="currentStep == 1" key="step1">
+                    <div class="col-md-12" v-cloak>
+                        <h3>What would you like to do?<br /><small>Please let us know a bit about you...</small></h3>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <button id="step2Button" type="button" class="btn btn-default btn-lg" v-on:click="restartFlows"><span class="glyphicon glyphicon-pencil"></span></button>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="step2Button">Answer a few of questions</label><p>and let us choose an interface for you</p>
+                            </div>
+                            <div class="col-sm-1">
+                                <button id="step4Button" type="button" class="btn btn-default btn-lg" v-on:click="startCheckList"><span class="glyphicon glyphicon-list"></span></button>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="step4Button">View our checklist</label><p>to compare and browse interfaces</p>
+                            </div>
+                            <div class="col-sm-1">    
+                                <button id="stepXButton" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#dialogBoxPm"><span class="glyphicon glyphicon-user"></span></button>
+                            </div>
+                            <div class="col-sm-3"> 
+                                <label for="stepXButton">Learn</label><p> how to be a Project Manager</p> 
+                            </div>
+                        </div>
+                    </div> 
+                </div>                
+                <div class="row" v-if="currentStep == 2" key="step2">
+                    <div class="col-md-6" v-cloak>    
+                        <h5 v-if="hasNext">Please answer a few of questions below:</h5>
+                        <transition name="slide-fade" v-on:leave="getNextQuestion" v-on:after-enter="enablePopover">
+                            <h3 v-if="show">{{ q.text }}</h3>
+                        </transition>
+                        <form role="form">
+                            <div class="form-group" v-if="q.description != null && q.description.length > 0">
+                                <button type="button" class="btn btn-default btn-xs" data-toggle="popover" data-html="true" v-bind:data-content="marked(q.description, { renderer: markdownRenderer })">...</button>
+                            </div>
+                            <div class="form-group" v-if="hasNext">
+                                <div class="radio">
+                                    <label><input type="radio" v-model="answer" v-bind:value="true" />Yes</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" v-model="answer" v-bind:value="false" />No</label>
+                                </div>
+                            </div>
+                            <div class="form-group">&nbsp;</div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default" v-on:click="currentStep = 1">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </button>    
+                                <button type="button" class="btn btn-default" v-on:click="restartFlows" title="Restart">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                                <button type="button" class="btn btn-default" v-if="hasNext" v-on:click="answerCurrentQuestion" v-bind:disabled="!(hasAnswered && hasNext)" title="Next">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6" v-cloak>
+                        <question-history :answered-questions="answeredQuestions"></question-history>
+                    </div>
+                </div>
+                <div class="row" v-if="currentStep == 3" key="step3">
+                    <div class="col-md-6" v-cloak>
+                        <h5>The best collection interface for you is...</h5>
+                        <h3>
+                            {{ interface.typeName }}<br />
+                            <small>{{ interface.namespace }}</small>
+                        </h3><br />
+                        <a v-if="interface != null" v-bind:href="interface.referenceUrl" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> Learn more about the interface</a>
+                        <button type="button" class="btn btn-default" v-on:click="restartFlows" title="Restart">
+                            <span class="glyphicon glyphicon-step-backward"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-6" v-cloak>
+                        <question-history :answered-questions="answeredQuestions"></question-history>
+                        <question-skipped :skipped-questions="skippedQuestions" :has-next="hasNext" :interface="interface"></question-skipped>
+                    </div>
+                </div>
+                <div class="row" v-if="currentStep == 4" key="step4">
+                    <div class="col-md-2">    
+                        <button type="button" class="btn btn-default" v-on:click="currentStep = 1">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>    
+                    </div>
+                    <div class="col-md-5" v-cloak>
+                        <h4>What I want are...&nbsp;<small><a id="r-select" href="#r-result"><span class="glyphicon glyphicon-menu-right"></span></a></small></h4>
+                        <ul class="list-unstyled">
+                            <li v-for="text in checkList.allQuestionTexts">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" v-on:change="checkList.tickQuestion(text)"/>{{ text }}</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> 
+                    <div class="col-md-5" v-cloak>
+                        <h4>What I get are...&nbsp;<small><a id="r-result" href="#r-select"><span class="glyphicon glyphicon-menu-left"></span></a></small></h4>
+                        <transition-group name="flip-list" tag="ul" class="list-unstyled">
+                            <li v-for="item in checkList.interfaces" v-bind:key="item.typeName">
+                                <div class="checkbox">
+                                    <label v-if="checkList.checkInterfaceAvailability(item.typeName)"><input type="checkbox" checked disabled/>{{ item.typeName }}</label>
+                                    <label v-else class="text-muted"><input type="checkbox" disabled/>{{ item.typeName }}</label>
+                                    <small><a v-bind:href="item.referenceUrl" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></small>
+                                </div>
+                            </li>
+                        </transition-group>    
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>    
+    <!-- Template -->
+    <template id="question-history">
+        <div>
+            <h5 v-if="answeredQuestions.length > 0">Your answers:</h5>
+            <ul>
+                <li v-for="q in answeredQuestions">
+                    <span>{{ q.text }}</span>
+                    <span v-if="q.yourAnswer == true" class="glyphicon glyphicon-ok" title="Yes"></span>
+                    <span v-if="q.yourAnswer == false" class="glyphicon glyphicon-remove" title="No"></span>
+                </li>
+            </ul>
+        </div>
+    </template>
+    <template id="question-skipped">
+        <div>
+            <h5 v-if="!hasNext && skippedQuestions.length > 0">Based on your choices, you have implicitly answered following questions:</h5>
+            <ul>
+                <li v-for="q in skippedQuestions">
+                    <span>{{ q.text }}</span>
+                    <span v-if="q.answer == true" class="glyphicon glyphicon-ok" title="Yes"></span>
+                    <span v-if="q.answer == false" class="glyphicon glyphicon-remove" title="No"></span>
+                </li>
+            </ul>
+        </div>
+    </template>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+    <script>  
+        var renderer = new marked.Renderer();
+
+        renderer.link = function (href, title, text) {
+            return '<a target="_blank" href="' + href + '" title="' + title + '">' + text + '</a>';
+        };
+        Vue.component("question-history", {
+            template: "#question-history",
+            props: ['answered-questions']
+        });
+        Vue.component("question-skipped", {
+            template: "#question-skipped",
+            props: ['skipped-questions', 'has-next', 'interface']
+        });
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('#dialogBoxFaq').on('show.bs.modal', function (e) {
+                if ($('#dialogBoxFaqBody').is(':empty')) {
+                    $.get('doc/faq.md', null, function (data) {
+                        $('#dialogBoxFaqBody').html(marked(data, { renderer: renderer }));
+                    });
+                }
+            });
+            $('#dialogBoxAbout').on('show.bs.modal', function (e) {
+                if ($('#dialogBoxAboutBody').is(':empty')) {
+                    $.get('doc/about.md', null, function (data) {
+                        $('#dialogBoxAboutBody').html(marked(data, { renderer: renderer }));
+                    });
+                }
+            });
+        });
+        $.get('questions.json', null, function (questions) {
+            var flow = Flow.initialize(questions);
+            var app = new Vue({
+                el: "#main",
+                data: {
+                    markdownRenderer: renderer,
+                    currentStep: 0,
+                    questions: questions,
+                    checkList: null,
+                    //-------------//
+                    show: true,
+                    q: flow.moveToNextQuestion(),
+                    answer: null,
+                    answeredQuestions: flow.answeredQuestions,
+                    skippedQuestions: flow.skippedQuestions,
+                    interface: null,
+                    hasNext: true 
+                },
+                methods: {
+                    answerCurrentQuestion: function (ev) {
+                        this.show = false;
+                        flow.answerCurrentQuestion(this.answer);
+                    },
+                    getNextQuestion: function (ev) {
+                        var qNext = flow.moveToNextQuestion();
+
+                        if (qNext != null) { 
+                            this.answer = null;
+                            this.hasNext = true;
+                            this.q = qNext;
+                        } else {
+                            this.hasNext = false;
+                            this.q = null;
+
+                            this.interface = flow.interfaces[0];
+                            this.currentStep = 3; // here
+                        }
+                        this.show = true;
+                    },
+                    restartFlows: function (ev) {
+                        this.currentStep = 2;
+
+                        flow = Flow.initialize(this.questions); 
+
+                        //-------------//
+                        this.show = true;
+                        this.q = flow.moveToNextQuestion();
+                        this.answer = null;
+                        this.answeredQuestions = flow.answeredQuestions;
+                        this.skippedQuestions = flow.skippedQuestions;
+                        this.interface = null;
+                        this.hasNext = true;
+                    },
+                    enablePopover: function (ev) {
+                        if (this.currentStep == 2) {
+                            $('[data-toggle="popover"]').popover(); 
+                        }
+                    },
+                    startCheckList: function (ev) {
+                        if (this.currentStep != 4) {
+                            this.currentStep = 4;
+                            this.checkList = CheckList.initialize(this.questions);
+                        }
+                    }
+                },
+                computed: {
+                    hasAnswered: function () {
+                        return this.answer != null;
+                    }
+                }
+            }); 
+        });
+    </script>    
+</body>
+</html>

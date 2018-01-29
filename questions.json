@@ -1,0 +1,149 @@
+[
+  {
+    "text": "I want to retrieve item one-by-one before whole collection is ready.",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IEnumerable<IGrouping<TKey, TElement>>", "IOrderedEnumerable<TElement>", "IOrderedQueryable<T>", "IQueryable<T>" ],
+    "description": "",
+    "questionType" : 0
+  },
+  {
+    "text": "I want to know total number of items in the collection without counting them all.",
+    "answer": true,
+    "interfaces": [ "ICollection<T>", "IDictionary<TKey, TValue>", "IList<T>", "IReadOnlyCollection<T>", "IReadOnlyList<T>", "IReadOnlyDictionary<TKey, TValue>", "IProducerConsumerCollection<T>", "ISet<T>", "IOrderedQueryable<T>", "IQueryable<T>" ],
+    "description": "The users may get number of items from properties or query methods such as [Count](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.icollection-1.count) and [Count()](https://docs.microsoft.com/en-us/dotnet/api/system.linq.queryable.count) without enumerating them.",
+    "questionType": 0
+  },
+  {
+    "text": "I want to access items with index (like traditional array).",
+    "answer": true,
+    "interfaces": [ "IList<T>", "IReadOnlyList<T>" ],
+    "description": "",
+    "questionType": 0
+  },
+  {
+    "text": "I need to modify the collection.",
+    "answer": false,
+    "interfaces": [ "IEnumerable<T>", "IEnumerable<IGrouping<TKey, TElement>>", "ILookup<TKey, TElement>", "IOrderedEnumerable<TElement>", "IOrderedQueryable<T>", "IQueryable<T>", "IReadOnlyCollection<T>", "IReadOnlyDictionary<TKey, TValue>", "IReadOnlyList<T>" ],
+    "description": "The users cannot add item to or remove item from the colletion. Assigning item to the colletion via index is also not allowed. When the collection represents the data that usually never change, such as supported launguages, we suggest that it should be read-only.",
+    "questionType": 0
+  },
+  {
+    "text": "The original order of items is very important to me.",
+    "answer": false,
+    "interfaces": [ "IProducerConsumerCollection<T>", "IEnumerable<IGrouping<TKey, TElement>>", "ILookup<TKey, TElement>", "IQueryable<T>", "IDictionary<TKey, TValue>", "IReadOnlyDictionary<TKey, TValue>", "ISet<T>" ],
+    "description": "Some collection types do not keep the order of how items are added.",
+    "questionType": 0
+  },
+  {
+    "text": "I want to find items with specific keys.",
+    "answer": true,
+    "interfaces": [ "IDictionary<TKey, TValue>", "IReadOnlyDictionary<TKey, TValue>", "IEnumerable<IGrouping<TKey, TElement>>", "ILookup<TKey, TElement>" ],
+    "description": "",
+    "questionType": 0
+  },
+  {
+    "text": "I want to convert the collection to a collection of the item's parent type without creating a new instance.",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IQueryable<T>", "IOrderedQueryable<T>", "IReadOnlyCollection<T>", "IReadOnlyList<T>", "IEnumerable<IGrouping<TKey, TElement>>" ],
+    "description": "If your answer is yes, the collection must support [Covariance](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/covariance-contravariance/).",
+    "questionType": 0
+  },
+  {
+    "text": "I want to query the collection with LINQ queries.",
+    "answer": true,
+    "interfaces": [ "IOrderedQueryable<T>", "IQueryable<T>" ],
+    "description": "If your answer is yes, the collection must can be queried via [expression tree](https://docs.microsoft.com/en-us/dotnet/api/system.linq.expressions).",
+    "questionType": 0
+  },
+  {
+    "text": "The data have to be in one-to-many relationship.",
+    "answer": true,
+    "interfaces": [ "IEnumerable<IGrouping<TKey, TElement>>", "ILookup<TKey, TElement>" ],
+    "description": "Just like your relationship (joke).",
+    "questionType": 0
+  },
+  {
+    "text": "The item in the collection must be unique.",
+    "answer": true,
+    "interfaces": [ "ISet<T>" ],
+    "description": "",
+    "questionType": 0
+  },
+  {
+    "text": "The collection must be thread-safe.",
+    "answer": true,
+    "interfaces": [ "IProducerConsumerCollection<T>" ],
+    "description": "The collection can accept or remove items concurrently at the cost of performance.",
+    "questionType": 0
+  },
+  {
+    "text": "Thread-safe",
+    "answer": true,
+    "interfaces": [ "IProducerConsumerCollection<T>" ],
+    "description": "",
+    "questionType": 1
+  },
+  {
+    "text": "Distinct items",
+    "answer": true,
+    "interfaces": [ "ISet<T>" ],
+    "description": "",
+    "questionType": 1
+  },
+  {
+    "text": "Iterator pattern",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IEnumerable<IGrouping<TKey, TElement>>" ],
+    "description": "",
+    "questionType" : 1
+  },
+  {
+    "text": "LINQ Expression supported",
+    "answer": true,
+    "interfaces": ["IOrderedQueryable<T>", "IQueryable<T>"],
+    "description": "",
+    "questionType" : 1
+  },
+  {
+    "text": "With Count property",
+    "answer": true,
+    "interfaces": ["ICollection<T>", "IList<T>", "IReadOnlyCollection<T>", "IReadOnlyList<T>",  "IDictionary<TKey, TValue>", "IReadOnlyDictionary<TKey, TValue>", "ILookup<TKey, TElement>", "IProducerConsumerCollection<T>", "ISet<T>"],
+    "description": "",
+    "questionType" : 1
+  },
+  {
+    "text": "Covariance supported",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IQueryable<T>", "IOrderedQueryable<T>", "IReadOnlyCollection<T>", "IReadOnlyList<T>", "IEnumerable<IGrouping<TKey, TElement>>" ],
+    "description": "",
+    "questionType" : 1
+  },
+  {
+    "text": "Index supported",
+    "answer": true,
+    "interfaces": [ "IList<T>", "IReadOnlyList<T>" ],
+    "description": "",
+    "questionType": 1
+  },
+  {
+    "text": "Key-value form",
+    "answer": true,
+    "interfaces": [ "IDictionary<TKey, TValue>", "IReadOnlyDictionary<TKey, TValue>" ],
+    "description": "",
+    "questionType": 1
+  },
+  {
+    "text": "Deferred execution",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IEnumerable<IGrouping<TKey, TElement>>", "IOrderedEnumerable<TElement>", "IOrderedQueryable<T>", "IQueryable<T>" ],
+    "description": "",
+    "questionType": 1
+  },
+  {
+    "text": "Read-only",
+    "answer": true,
+    "interfaces": [ "IEnumerable<T>", "IEnumerable<IGrouping<TKey, TElement>>", "ILookup<TKey, TElement>", "IOrderedEnumerable<TElement>", "IOrderedQueryable<T>", "IQueryable<T>", "IReadOnlyCollection<T>", "IReadOnlyDictionary<TKey, TValue>", "IReadOnlyList<T>" ],
+    "description": "",
+    "questionType": 1
+  }
+]
