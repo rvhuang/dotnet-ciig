@@ -281,14 +281,14 @@
             $('[data-toggle="tooltip"]').tooltip();
             $('#dialogBoxFaq').on('show.bs.modal', function (e) {
                 if ($('#dialogBoxFaqBody').is(':empty')) {
-                    $.get('doc/faq.md', null, function (data) {
+                    $.get('docs/faq.md', null, function (data) {
                         $('#dialogBoxFaqBody').html(marked(data, { renderer: renderer }));
                     });
                 }
             });
             $('#dialogBoxAbout').on('show.bs.modal', function (e) {
                 if ($('#dialogBoxAboutBody').is(':empty')) {
-                    $.get('doc/about.md', null, function (data) {
+                    $.get('docs/about.md', null, function (data) {
                         $('#dialogBoxAboutBody').html(marked(data, { renderer: renderer }));
                     });
                 }
