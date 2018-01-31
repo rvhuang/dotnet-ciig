@@ -108,15 +108,7 @@ var Flow = /** @class */ (function () {
     }
     Object.defineProperty(Flow.prototype, "hasNextQuestion", {
         get: function () {
-            if (this._questions.length > 1)
-                return true;
-            if (this._questions.length < 1)
-                return false;
-            var lastQ = this._questions[0];
-            if (lastQ.interfaces.length < this._interfaces.length)
-                return true;
-            var interfaceTypes = this._interfaces.map(function (i) { return i.typeName; });
-            return lastQ.interfaces.some(function (typeName) { return interfaceTypes.indexOf(typeName) < 0; });
+            return this._questions.length > 0;
         },
         enumerable: true,
         configurable: true
@@ -159,7 +151,7 @@ var Flow = /** @class */ (function () {
     Flow.prototype.moveToNextQuestion = function () {
         var index = Math.floor(Math.random() * (this._questions.length - 0)) + 0;
         if (this._currentQuestion == null || this._questions.length > 0) {
-            this._currentQuestion = this._questions[index]; // this._questions.pop() as Question;
+            this._currentQuestion = this._questions[index];
             this._questions.splice(index, 1);
         }
         else {
@@ -179,11 +171,8 @@ var Flow = /** @class */ (function () {
         else {
             this._interfaces = this._interfaces.filter(function (i) { return _this._currentQuestion.interfaces.indexOf(i.typeName) < 0; });
         }
-        var interfaceTypes = this._interfaces.map(function (i) { return i.typeName; });
-        //console.log("Remaining interfaces:");
-        //console.log(interfaceTypes);
-        this._questions = this._questions.filter(function (q) { return _this.questionFilter(q, interfaceTypes); }).sort(Question.compare);
         this._currentQuestion.yourAnswer = answer;
+        this._questions = this._questions.filter(function (q) { return _this.questionFilter(q, _this._interfaces.map(function (i) { return i.typeName; })); }).sort(Question.compare);
         this._doneQuestions.push(this._currentQuestion);
     };
     Flow.prototype.getInterfaceInfo = function (typeName) {

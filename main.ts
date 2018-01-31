@@ -120,17 +120,7 @@ class Flow {
     private _currentQuestion: Question | null;
 
     get hasNextQuestion(): boolean {
-        if (this._questions.length > 1) return true;
-        if (this._questions.length < 1) return false;
-
-        var lastQ = this._questions[0];
-
-        if (lastQ.interfaces.length < this._interfaces.length)
-            return true;
-        
-        var interfaceTypes = this._interfaces.map(i => i.typeName); 
-
-        return lastQ.interfaces.some(typeName => interfaceTypes.indexOf(typeName) < 0);
+        return this._questions.length > 0;
     }
 
     get currentQuestion(): Question | null {
@@ -157,7 +147,7 @@ class Flow {
         var index = Math.floor(Math.random() * (this._questions.length  - 0)) + 0;
         
         if (this._currentQuestion == null || this._questions.length > 0) {
-            this._currentQuestion = this._questions[index]; // this._questions.pop() as Question;
+            this._currentQuestion = this._questions[index];
             this._questions.splice(index, 1); 
         }
         else { 
@@ -177,14 +167,8 @@ class Flow {
         else {
             this._interfaces = this._interfaces.filter(i => this._currentQuestion!.interfaces.indexOf(i.typeName) < 0);
         }
-
-        var interfaceTypes = this._interfaces.map(i => i.typeName);
-
-        //console.log("Remaining interfaces:");
-        //console.log(interfaceTypes);
-
-        this._questions = this._questions.filter(q => this.questionFilter(q, interfaceTypes)).sort(Question.compare);
         this._currentQuestion.yourAnswer = answer;
+        this._questions = this._questions.filter(q => this.questionFilter(q, this._interfaces.map(i => i.typeName))).sort(Question.compare);
         this._doneQuestions.push(this._currentQuestion);
     }
 
