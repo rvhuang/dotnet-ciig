@@ -205,12 +205,12 @@
                     </div>
                 </div>
                 <div class="row" v-if="currentStep == 4" key="step4">
-                    <div class="col-md-2" v-cloak>    
+                    <div class="col-md-2 col-md-offset-2" v-cloak>    
                         <button type="button" class="btn btn-default" v-on:click="currentStep = 1">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>    
                     </div>
-                    <div class="col-md-5" v-cloak>
+                    <div class="col-md-4" v-cloak>
                         <h4>What I want are...&nbsp;<small><a id="r-select" href="#r-result"><span class="glyphicon glyphicon-menu-right"></span></a></small></h4>
                         <ul class="list-unstyled">
                             <li v-for="text in checkList.allQuestionTexts">
@@ -220,7 +220,7 @@
                             </li>
                         </ul>
                     </div> 
-                    <div class="col-md-5" v-cloak>
+                    <div class="col-md-4" v-cloak>
                         <h4>What I get are...&nbsp;<small><a id="r-result" href="#r-select"><span class="glyphicon glyphicon-menu-left"></span></a></small></h4>
                         <transition-group name="flip-list" tag="ul" class="list-unstyled">
                             <li v-for="item in checkList.interfaces" v-bind:key="item.typeName">
