@@ -30,7 +30,7 @@
   {
     "text": "The original order of items is very important to me.",
     "answer": true,
-    "interfaces": [ "IList<T>", "IReadOnlyList<T>", "IEnumerable<IGrouping<TKey, TElement>>" ],
+    "interfaces": [ "IList<T>", "IReadOnlyList<T>" ],
     "description": "Some collection types do not keep the order of how items are added.",
     "questionType": 0
   },
