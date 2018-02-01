@@ -57,6 +57,7 @@ var QuestionType;
 var Question = /** @class */ (function () {
     function Question(question) {
         this._interfaces = question.interfaces;
+        this._yourAnswer = false;
         this.text = question.text;
         this.answer = question.answer;
         this.description = question.description;
@@ -100,6 +101,7 @@ var Question = /** @class */ (function () {
 var Flow = /** @class */ (function () {
     function Flow(questions, interfaces) {
         this._questions = questions.sort(Question.compare);
+        this._currentQuestion = null;
         this._doneQuestions = new Array();
         this._skippedQuestions = new Array();
         this._interfaces = interfaces;
@@ -203,6 +205,7 @@ var CheckList = /** @class */ (function () {
         this._questions.forEach(function (q) { return q.yourAnswer = false; });
         this._interfaces = interfaces;
         this._interfaces.sort(function (a, b) { return a.typeName.localeCompare(b.typeName); });
+        this._ticked = new Array();
     }
     Object.defineProperty(CheckList.prototype, "allQuestionTexts", {
         get: function () {
