@@ -89,6 +89,7 @@ class Question implements QuestionInfo {
     
     constructor(question: QuestionInfo) {
         this._interfaces = question.interfaces;
+        this.__yourAnswer = false;
 
         this.text = question.text;
         this.answer = question.answer;
@@ -197,6 +198,7 @@ class Flow {
 
     constructor(questions: Array<Question>, interfaces: Array<InterfaceInfo>) {
         this._questions = questions.sort(Question.compare);
+        this._currentQuestion = null;
         this._doneQuestions = new Array<Question>();
         this._skippedQuestions = new Array<Question>();
         this._interfaces = interfaces;  
@@ -247,6 +249,7 @@ class CheckList {
         this._questions.forEach(q => q.yourAnswer = false);
         this._interfaces = interfaces;
         this._interfaces.sort((a, b) => a.typeName.localeCompare(b.typeName));  
+        this._ticked = null;
     }
 
     static initialize(questions: Array<QuestionInfo>): CheckList {
