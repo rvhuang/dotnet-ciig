@@ -89,7 +89,7 @@ class Question implements QuestionInfo {
     
     constructor(question: QuestionInfo) {
         this._interfaces = question.interfaces;
-        this.__yourAnswer = false;
+        this._yourAnswer = false;
 
         this.text = question.text;
         this.answer = question.answer;
@@ -249,7 +249,7 @@ class CheckList {
         this._questions.forEach(q => q.yourAnswer = false);
         this._interfaces = interfaces;
         this._interfaces.sort((a, b) => a.typeName.localeCompare(b.typeName));  
-        this._ticked = null;
+        this._ticked = new Array<Question>();
     }
 
     static initialize(questions: Array<QuestionInfo>): CheckList {
