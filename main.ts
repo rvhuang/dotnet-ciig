@@ -219,9 +219,10 @@ class Flow {
 
 class CheckList {
     private _questions: Array<Question>;
-    private _ticked: ReadonlyArray<Question>;
+    private _tickedQuestions: ReadonlyArray<Question>;
     private _interfaces: Array<InterfaceInfo>;
-    
+    private _tickedInterfaces: ReadonlyArray<InterfaceInfo>;
+
     get allQuestionTexts(): Array<string> {
         return this._questions.map(q => q.text);
     }
@@ -230,13 +231,13 @@ class CheckList {
         return this._interfaces;
     }
 
-    tickQuestion(questionText: string){
+    tickQuestion(questionText: string) {
         this._questions.filter(q => q.text == questionText).forEach(q => q.yourAnswer = !q.yourAnswer);
-        this._ticked = this._questions.filter(q => q.yourAnswer == q.answer);
+        this._tickedQuestions = this._questions.filter(q => q.yourAnswer == q.answer);
         this._interfaces.sort((a, b) => {
-            if (this._ticked.length > 0) {
-                var checkStateA = this._ticked.every(q => q.interfaces.indexOf(a.typeName) >= 0);
-                var checkStateB = this._ticked.every(q => q.interfaces.indexOf(b.typeName) >= 0);
+            if (this._tickedQuestions.length > 0) {
+                var checkStateA = this._tickedQuestions.every(q => q.interfaces.indexOf(a.typeName) >= 0);
+                var checkStateB = this._tickedQuestions.every(q => q.interfaces.indexOf(b.typeName) >= 0);
 
                 if (checkStateA && !checkStateB) return -1;
                 if (checkStateB && !checkStateA) return 1;
@@ -246,7 +247,24 @@ class CheckList {
     }
 
     checkInterfaceAvailability(typeName: string) : boolean {
-        return this._ticked != null && this._ticked.length > 0 && this._ticked.every(q => q.interfaces.indexOf(typeName) >= 0);
+        return this._tickedQuestions != null && this._tickedQuestions.length > 0 && this._tickedQuestions.every(q => q.interfaces.indexOf(typeName) >= 0);
+    }
+
+    tickInterface(typeName: string) {
+        var tickedInterfaces = this._tickedInterfaces.filter(i => i.typeName != typeName);
+
+        if (tickedInterfaces.length == this._tickedInterfaces.length) {            
+            this._interfaces.forEach(i => { 
+                if (i.typeName == typeName) {
+                    tickedInterfaces.push(i);
+                }
+            });
+        }
+        this._tickedInterfaces = tickedInterfaces;
+    }
+
+    checkQuestionAvailability(questoinText: string) : ReadonlyArray<InterfaceInfo> {
+        return this._tickedInterfaces.filter(i => this._questions.some(q => q.text == questoinText && q.interfaces.indexOf(i.typeName) >= 0));
     }
 
     constructor(questions: Array<Question>, interfaces: Array<InterfaceInfo>) {
@@ -254,7 +272,8 @@ class CheckList {
         this._questions.forEach(q => q.yourAnswer = false);
         this._interfaces = interfaces;
         this._interfaces.sort((a, b) => a.typeName.localeCompare(b.typeName));  
-        this._ticked = new Array<Question>();
+        this._tickedQuestions = new Array<Question>();
+        this._tickedInterfaces = new Array<InterfaceInfo>();
     }
 
     static initialize(questions: Array<QuestionInfo>): CheckList {
