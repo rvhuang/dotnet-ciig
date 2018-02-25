@@ -7,6 +7,7 @@ class InterfaceInfo {
     private _typeName: string;
     private _namespace: string;
     private _referenceUrl: string;
+    private _shortName: string;
     
     get typeName(): string {
         return this._typeName;
@@ -17,31 +18,35 @@ class InterfaceInfo {
     get referenceUrl(): string {
         return InterfaceInfo.baseReferenceUrl + this._referenceUrl;
     }
+    get shortName(): string {
+        return this._shortName;
+    }
 
-    constructor(typeName: string, ns: string, referenceUrl: string) { 
+    constructor(typeName: string, ns: string, referenceUrl: string, shortName: string) { 
         this._typeName = typeName;
         this._namespace = ns;
         this._referenceUrl = referenceUrl;
+        this._shortName = shortName;
     }
 
     static createAllInterfaces(): Array<InterfaceInfo> {
         var interfaces = new Array<InterfaceInfo>();
 
-        interfaces.push(new InterfaceInfo("IEnumerable<T>", "System.Collections.Generic", "system.collections.generic.ienumerable-1"));
-        interfaces.push(new InterfaceInfo("IProducerConsumerCollection<T>", "System.Collections.Concurrent", "system.collections.concurrent.iproducerconsumercollection-1"));
-        interfaces.push(new InterfaceInfo("IReadOnlyCollection<T>", "System.Collections.Generic", "system.collections.generic.ireadonlycollection-1"));
-        interfaces.push(new InterfaceInfo("IReadOnlyList<T>", "System.Collections.Generic", "system.collections.generic.ireadonlylist-1"));
-        interfaces.push(new InterfaceInfo("IReadOnlyDictionary<TKey, TValue>", "System.Collections.Generic", "system.collections.generic.ireadonlydictionary-2"));
-        interfaces.push(new InterfaceInfo("ICollection<T>", "System.Collections.Generic", "system.collections.generic.icollection-1"));
-        interfaces.push(new InterfaceInfo("IList<T>", "System.Collections.Generic", "system.collections.generic.ilist-1"));
-        interfaces.push(new InterfaceInfo("ISet<T>", "System.Collections.Generic", "system.collections.generic.iset-1"));
-        interfaces.push(new InterfaceInfo("IDictionary<TKey, TValue>", "System.Collections.Generic", "system.collections.generic.idictionary-2"));
+        interfaces.push(new InterfaceInfo("IEnumerable<T>", "System.Collections.Generic", "system.collections.generic.ienumerable-1", "E"));
+        interfaces.push(new InterfaceInfo("IProducerConsumerCollection<T>", "System.Collections.Concurrent", "system.collections.concurrent.iproducerconsumercollection-1", "PCC"));
+        interfaces.push(new InterfaceInfo("IReadOnlyCollection<T>", "System.Collections.Generic", "system.collections.generic.ireadonlycollection-1", "ROC"));
+        interfaces.push(new InterfaceInfo("IReadOnlyList<T>", "System.Collections.Generic", "system.collections.generic.ireadonlylist-1", "ROL"));
+        interfaces.push(new InterfaceInfo("IReadOnlyDictionary<TKey, TValue>", "System.Collections.Generic", "system.collections.generic.ireadonlydictionary-2", "ROD"));
+        interfaces.push(new InterfaceInfo("ICollection<T>", "System.Collections.Generic", "system.collections.generic.icollection-1", "C"));
+        interfaces.push(new InterfaceInfo("IList<T>", "System.Collections.Generic", "system.collections.generic.ilist-1", "L"));
+        interfaces.push(new InterfaceInfo("ISet<T>", "System.Collections.Generic", "system.collections.generic.iset-1", "S"));
+        interfaces.push(new InterfaceInfo("IDictionary<TKey, TValue>", "System.Collections.Generic", "system.collections.generic.idictionary-2", "D"));
 
-        interfaces.push(new InterfaceInfo("IEnumerable<IGrouping<TKey, TElement>>", "System.Linq", "system.linq.igrouping-2"));
-        interfaces.push(new InterfaceInfo("ILookup<TKey, TElement>", "System.Linq", "system.linq.ilookup-2"));
-        interfaces.push(new InterfaceInfo("IOrderedEnumerable<TElement>", "System.Linq", "system.linq.iorderedenumerable-1"));
-        interfaces.push(new InterfaceInfo("IQueryable<T>", "System.Linq", "system.linq.iqueryable-1"));
-        interfaces.push(new InterfaceInfo("IOrderedQueryable<T>", "System.Linq", "system.linq.iorderedqueryable-1"));
+        interfaces.push(new InterfaceInfo("IEnumerable<IGrouping<TKey, TElement>>", "System.Linq", "system.linq.igrouping-2", "G"));
+        interfaces.push(new InterfaceInfo("ILookup<TKey, TElement>", "System.Linq", "system.linq.ilookup-2", "Lkp"));
+        interfaces.push(new InterfaceInfo("IOrderedEnumerable<TElement>", "System.Linq", "system.linq.iorderedenumerable-1", "OE"));
+        interfaces.push(new InterfaceInfo("IQueryable<T>", "System.Linq", "system.linq.iqueryable-1", "Q"));
+        interfaces.push(new InterfaceInfo("IOrderedQueryable<T>", "System.Linq", "system.linq.iorderedqueryable-1", "OQ"));
 
         return interfaces;
     }
