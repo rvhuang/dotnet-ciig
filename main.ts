@@ -102,6 +102,15 @@ class Question implements QuestionInfo {
         this.questionType = question.questionType;
     }
 
+    hasInterface(typeName: string): boolean {
+        if (this.answer) {
+            return this._interfaces.indexOf(typeName) >= 0; // Whitelisting
+        }
+        else {
+            return this._interfaces.indexOf(typeName) < 0; // Blacklisting
+        }
+    }
+
     static compare(a: Question, b: Question): number {
         if (a == null && b != null)
             return 1;            
@@ -247,7 +256,7 @@ class CheckList {
     }
 
     checkInterfaceAvailability(typeName: string) : boolean {
-        return this._tickedQuestions != null && this._tickedQuestions.length > 0 && this._tickedQuestions.every(q => q.interfaces.indexOf(typeName) >= 0);
+        return this._tickedQuestions != null && this._tickedQuestions.length > 0 && this._tickedQuestions.every(q => q.hasInterface(typeName));
     }
 
     tickInterface(typeName: string) {
@@ -264,7 +273,7 @@ class CheckList {
     }
 
     checkQuestionAvailability(questoinText: string) : ReadonlyArray<InterfaceInfo> {
-        return this._tickedInterfaces.filter(i => this._questions.some(q => q.text == questoinText && q.interfaces.indexOf(i.typeName) >= 0));
+        return this._tickedInterfaces.filter(i => this._questions.some(q => q.text == questoinText && q.hasInterface(i.typeName)));
     }
 
     constructor(questions: Array<Question>, interfaces: Array<InterfaceInfo>) {
