@@ -270,6 +270,17 @@ class CheckList {
             });
         }
         this._tickedInterfaces = tickedInterfaces;
+        this._questions.sort((a, b) => {
+            var countA = 0;
+            var countB = 0;
+
+            this._tickedInterfaces.forEach(i => { countA += a.hasInterface(i.typeName) ? 1 : 0 });
+            this._tickedInterfaces.forEach(i => { countB += b.hasInterface(i.typeName) ? 1 : 0 });
+
+            if (countA > countB) return -1;
+            if (countA < countB) return 1;
+            return 0;
+        });
     }
 
     checkQuestionAvailability(questoinText: string) : ReadonlyArray<InterfaceInfo> {
