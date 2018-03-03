@@ -9,7 +9,7 @@
     <meta property="og:image" content="" />
     -->
     <meta property="og:title" content="NET Collection Interface Interactive Guide" />
-    <meta property="og:description" content="An interactive guide to help people understand and choose their collection interfaces in .NET world." />
+    <meta property="og:description" content="An interactive guide created for learning collection interfaces in .NET world." />
     <title>.Net Collection Interfaces Interactive Guide</title>    
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZklEQVR42mNkoBAwDgoDWIC4AYhjgZiPSH2fgHgxSB/IgG4gLsGj+BUQpwPxfyQxOSCuB+L5IAM+ADE/ARt1gfgKmlgCEE9gRDMZF3AA4oNoYvZAfGCYGEBxIFIcjRQnJIrAwBsAAGOrIQvOAF2fAAAAAElFTkSuQmCC" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -124,8 +124,9 @@
             </ul>
         </nav>
         <div class="page-header">
-            <h2>.NET Collection Interface Interactive Guide</h2>
-            <p>An interactive guide to help people understand the collection interfaces in .NET world.</p>
+            <h1 class="hidden-xs">.NET Collection Interface Interactive Guide</h1>
+            <h3 class="visible-xs">.NET Collection Interface Interactive Guide</h3>
+            <p>An interactive guide created for learning collection interfaces in .NET world.</p>
         </div>
         <div id="main">
             <transition name="fade" mode="out-in" v-on:after-enter="enablePopover">
@@ -166,7 +167,7 @@
                                     <button id="step5Button" type="button" class="btn btn-default btn-lg" v-on:click="startComparison"><span class="glyphicon glyphicon-equalizer"></span></button>
                                 </div>
                                 <div class="menu-label-block">
-                                    <label for="step5Button">Compare</label>
+                                    <label for="step5Button">Select and compare</label>
                                     <p>interfaces to see the differences</p>
                                 </div>  
                             </div>
@@ -237,12 +238,12 @@
                 </div>
                 <div class="row" v-if="currentStep == 4" key="step4">
                     <div class="col-md-2" v-cloak>    
-                        <button type="button" class="btn btn-default" v-on:click="currentStep = 1">
+                        <button type="button" class="btn btn-default hidden-xs" v-on:click="currentStep = 1">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>    
                     </div>
-                    <div class="col-md-4" v-cloak>
-                        <h4>What I want are...&nbsp;<small><a id="r-select" href="#r-result"><span class="glyphicon glyphicon-menu-right"></span></a></small></h4>
+                    <div class="col-md-4" style="height: 100vh" v-cloak>
+                        <list-header-left caption="Features I want"></list-header-left>
                         <ul class="list-unstyled">
                             <li v-for="text in checkList.allQuestionTexts">
                                 <div class="checkbox">
@@ -251,8 +252,8 @@
                             </li>
                         </ul>
                     </div> 
-                    <div class="col-md-4 col-md-offset-2" v-cloak>
-                        <h4>What I get are...&nbsp;<small><a id="r-result" href="#r-select"><span class="glyphicon glyphicon-menu-left"></span></a></small></h4>
+                    <div class="col-md-4" style="height: 100vh" v-cloak>             
+                        <list-header-right caption="Interfaces I can use"></list-header-right>
                         <transition-group name="flip-list" tag="ul" class="list-unstyled">
                             <li v-for="item in checkList.interfaces" v-bind:key="item.typeName">
                                 <div class="checkbox">
@@ -266,27 +267,35 @@
                 </div>
                 <div class="row" v-if="currentStep == 5" key="step5">
                     <div class="col-md-2" v-cloak>    
-                        <button type="button" class="btn btn-default" v-on:click="currentStep = 1">
+                        <button type="button" class="btn btn-default hidden-xs" v-on:click="currentStep = 1">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>    
                     </div>
-                    <div class="col-md-4"> 
+                    <div class="col-md-4" style="height: 100vh" v-cloak> 
+                        <list-header-left caption="Interfaces to compare"></list-header-left>
                         <ul class="list-unstyled">
                             <li v-for="item in checkList.interfaces">
                                 <div class="checkbox">
-                                    <label class="text-muted"><input type="checkbox" v-on:change="checkList.tickInterface(item.typeName)"/>{{ item.typeName }}</label>
-                                    <small><a v-bind:href="item.referenceUrl" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></small>
+                                    <label class="text-muted"><input type="checkbox" v-on:change="checkList.tickInterface(item.typeName)"/>{{ item.typeName }}</label>                                    
+                                    <a v-bind:title="item.typeName" v-bind:href="item.referenceUrl" class="btn btn-default btn-xs" target="_blank" style="margin-right: 1px">
+                                        <b>{{ item.shortName }}</b>
+                                    </a>                                                    
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4 col-md-offset-2" v-cloak>
-                        <ul class="list-unstyled">
-                            <li v-for="text in checkList.allQuestionTexts">
-                                <label class="text-muted">{{ text }}</label>
-                                <a v-for="item in checkList.checkQuestionAvailability(text)" v-bind:href="item.referenceUrl" v-bind:title="item.typeName" class="btn btn-success btn-xs" target="_blank" role="button">{{ item.shortName }}</a>                               
-                            </li>
-                        </ul>
+                    <div class="col-md-4" style="height: 100vh" v-cloak>
+                        <list-header-right caption="Result"></list-header-right>
+                        <transition-group name="flip-list" tag="ul" class="list-unstyled">
+                            <li v-for="text in checkList.allQuestionTexts" v-bind:key="text">
+                                <p style="margin: 10px 0px 10px 0px">
+                                    <label style="font-weight: 400">{{ text }}</label> 
+                                    <a v-for="item in checkList.checkQuestionAvailability(text)" v-bind:title="item.typeName" class="btn btn-default btn-xs" href="#" style="margin-right: 1px">
+                                        <b>{{ item.shortName }}</b>
+                                    </a>
+                                </p>
+                            </li>           
+                        </transition-group>
                     </div>
                 </div>
             </transition>
@@ -317,6 +326,26 @@
             </ul>
         </div>
     </template>
+    <template id="list-header-left">
+        <div class="row">
+            <div class="col-xs-10 col-md-8">
+                <h4 style="margin: 1.5vh 0vh 1.5vh 0vh;">{{ caption }}</h4>
+            </div>
+            <div class="col-xs-2 col-md-4">
+                <a id="r-select" href="#r-result" class="btn btn-default btn-sm visible-xs" v-on:click="smoothScroll"><span class="glyphicon glyphicon-menu-right"></span></a>
+            </div>
+        </div>
+    </template>
+    <template id="list-header-right">
+        <div class="row">
+            <div class="col-xs-10 col-md-8">
+                <h4 style="margin: 1.5vh 0vh 1.5vh 0vh;">{{ caption }}</h4>
+            </div>
+            <div class="col-xs-2 col-md-4">
+                <a id="r-result" href="#r-select" class="btn btn-default btn-sm visible-xs" v-on:click="smoothScroll"><span class="glyphicon glyphicon-menu-left"></span></a>
+            </div>
+        </div>
+    </template>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="main.js"></script>
     <script>  
@@ -325,14 +354,16 @@
         renderer.link = function (href, title, text) {
             return '<a target="_blank" href="' + href + '" title="' + title + '">' + text + '</a>';
         };
-        Vue.component("question-history", {
-            template: "#question-history",
-            props: ['answered-questions']
-        });
-        Vue.component("question-skipped", {
-            template: "#question-skipped",
-            props: ['skipped-questions', 'has-next', 'interface']
-        });
+        var smoothScroll = function (ev) {
+            ev.preventDefault();
+
+            var hash = ev.currentTarget.hash;
+            $('html, body').stop().animate({
+                scrollTop: $(hash).offset().top - 12
+            }, 800, function(){
+                // window.location.hash = hash;
+            });
+        };   
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             $('#dialogBoxFaq').on('show.bs.modal', function (e) {
@@ -349,6 +380,28 @@
                     });
                 }
             });
+        });   
+        Vue.component("question-history", {
+            template: "#question-history",
+            props: ['answered-questions']
+        });
+        Vue.component("question-skipped", {
+            template: "#question-skipped",
+            props: ['skipped-questions', 'has-next', 'interface']
+        });
+        Vue.component("list-header-left", {
+            template: "#list-header-left",
+            props: ['caption'],
+            methods: {
+                smoothScroll: smoothScroll
+            }
+        });
+        Vue.component("list-header-right", {
+            template: "#list-header-right",
+            props: ['caption'],
+            methods: {
+                smoothScroll: smoothScroll
+            }
         });
         $.get('questions.json', null, function (questions) {
             var flow = Flow.initialize(questions);
@@ -358,7 +411,7 @@
                     markdownRenderer: renderer,
                     currentStep: 0, // remember to change back to 0
                     questions: questions,
-                    checkList: null, // remember to change back to null
+                    checkList: null, // remember to change back to null                
                     //-------------//
                     show: true,
                     q: flow.moveToNextQuestion(),
