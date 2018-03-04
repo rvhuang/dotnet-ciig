@@ -23,6 +23,14 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+main.js
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # Visual Studio 2015 cache/options directory
 .vs/
