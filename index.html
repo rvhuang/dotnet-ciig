@@ -76,7 +76,7 @@
                         <h4 class="modal-title" id="lablePm"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;&nbsp;Why are you here?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>I don't think you need the guide.</p>
+                        <p>We don't think you need the guide.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
@@ -138,7 +138,7 @@
                 <div class="row" v-if="currentStep == 0" key="step0">
                     <div class="col-md-12 text-center">
                         <p class="lead">&nbsp;</p>
-                        <p class="lead">There are many collection interfaces in .NET world.<br />Let's see which is best for you.</p>
+                        <p class="lead">There are many collection interfaces in .NET world.<br />Do you know their differences?</p>
                         <p class="lead">
                             <button type="button" class="btn btn-default btn-lg" v-on:click="currentStep = 1"><b>Get Started</b></button>
                         </p>
@@ -226,7 +226,7 @@
                 </div>
                 <div class="row" v-if="currentStep == 3" key="step3">
                     <div class="col-md-6" v-cloak>
-                        <h5>The best collection interface for you is...</h5>
+                        <h5>Based on your answers, the best interface for you is...</h5>
                         <h3>
                             {{ interface.typeName }}<br />
                             <small>{{ interface.namespace }}</small>
