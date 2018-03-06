@@ -35,6 +35,11 @@
             width: 14em;
             height: 6em;
         }
+        @media (max-width: 767px) { /* mobile only */
+            .mobile-col-height {
+                height: 100vh;
+            }
+        }
         [v-cloak] {
             display: none;
         }
@@ -242,7 +247,7 @@
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>    
                     </div>
-                    <div class="col-md-4" style="height: 100vh" v-cloak>
+                    <div class="col-md-4 mobile-col-height" v-cloak>
                         <list-header-left caption="Features I want"></list-header-left>
                         <ul class="list-unstyled">
                             <li v-for="text in checkList.allQuestionTexts">
@@ -252,7 +257,7 @@
                             </li>
                         </ul>
                     </div> 
-                    <div class="col-md-4" style="height: 100vh" v-cloak>             
+                    <div class="col-md-4 mobile-col-height" v-cloak>             
                         <list-header-right caption="Interfaces I can use"></list-header-right>
                         <transition-group name="flip-list" tag="ul" class="list-unstyled">
                             <li v-for="item in checkList.interfaces" v-bind:key="item.typeName">
@@ -271,7 +276,7 @@
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>    
                     </div>
-                    <div class="col-md-4" style="height: 100vh" v-cloak> 
+                    <div class="col-md-4 mobile-col-height" v-cloak> 
                         <list-header-left caption="Interfaces to compare"></list-header-left>
                         <ul class="list-unstyled">
                             <li v-for="item in checkList.interfaces">
@@ -284,13 +289,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4" style="height: 100vh" v-cloak>
-                        <list-header-right caption="Result"></list-header-right>
+                    <div class="col-md-4 mobile-col-height" v-cloak>
+                        <list-header-right caption="Features of interfaces"></list-header-right>
                         <transition-group name="flip-list" tag="ul" class="list-unstyled">
                             <li v-for="text in checkList.allQuestionTexts" v-bind:key="text">
                                 <p style="margin: 10px 0px 10px 0px">
                                     <label style="font-weight: 400">{{ text }}</label> 
-                                    <a v-for="item in checkList.checkQuestionAvailability(text)" v-bind:title="item.typeName" class="btn btn-default btn-xs" href="#" style="margin-right: 1px">
+                                    <a v-for="item in checkList.checkQuestionAvailability(text)" v-bind:title="item.typeName" v-bind:href="item.referenceUrl" class="btn btn-default btn-xs" style="margin-right: 1px">
                                         <b>{{ item.shortName }}</b>
                                     </a>
                                 </p>

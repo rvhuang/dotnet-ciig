@@ -4,7 +4,7 @@ Please send pull requests or open issues in this repository.
 
 ### About _questions.json_
 
-* The `answer` field indicates whether each item in `interfaces` field shall be excluded or included in the final result.
+* The `answer` field indicates whether the `interfaces` field is whitelisting or blacklisting.
 * The `interfaces` field is case-sensitive.
 * The `description` field supports Markdown syntax. The content is translated to HTML by [marked](https://www.npmjs.com/package/marked). All URLs are opened in new window.
 * The `questionType` indicates whether the question is for **Questionnaire** (0) or **CheckList** (1). Currently `description` field is unused in check list mode.
